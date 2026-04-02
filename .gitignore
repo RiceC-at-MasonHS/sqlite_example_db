@@ -8,21 +8,11 @@ env/
 venv/
 
 # Database (Lesson data)
-data/citizens.db
-data/citizens.db-journal
-data/citizens.db-wal
-
-# CloudBeaver Artifacts
-cloudbeaver_workspace/.data/
-cloudbeaver_workspace/.metadata/
-cloudbeaver_workspace/logs/
-cloudbeaver_workspace/shared_data/
-cloudbeaver_workspace/GlobalConfiguration/.dbeaver/*.bak
-cloudbeaver_workspace/GlobalConfiguration/.dbeaver/project-settings.json
-
-# Keep CloudBeaver configuration but ignore runtime data
-!cloudbeaver_workspace/GlobalConfiguration/.dbeaver/data-sources.json
-!cloudbeaver_workspace/conf/initial-data.conf
+# We ignore the db file so students start fresh
+data/
+*.db
+*.db-journal
+*.db-wal
 
 # IDE / OS
 .DS_Store
