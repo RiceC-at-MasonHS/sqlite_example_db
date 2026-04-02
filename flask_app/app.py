@@ -93,6 +93,7 @@ def security_lab():
     query_display = ""
     mode = "SECURED"
     search_term = ""
+    abs_db_path = os.path.abspath(DATABASE)
 
     if request.method == "POST":
         search_term = request.form["search_term"]
@@ -115,7 +116,7 @@ def security_lab():
                 flash(f"SQL Error: {e}")
         conn.close()
 
-    return render_template("security_lab.html", results=results, query=query_display, mode=mode, search_term=search_term)
+    return render_template("security_lab.html", results=results, query=query_display, mode=mode, search_term=search_term, abs_db_path=abs_db_path)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
