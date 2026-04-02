@@ -1,174 +1,115 @@
 # SQLite Database Lab 🐚
 
-Welcome to Bikini Bottom! In this lab, you will learn the fundamentals of **Relational Databases** using **SQLite**, the most widely deployed database engine in the world.
+Welcome to Bikini Bottom! In this lab, you will learn the fundamentals of **Relational Databases** using **SQLite**.
 
-## 🚀 Why SQLite?
-
+## 🌟 What makes SQLite special?
 Unlike "gold-standard" databases like PostgreSQL, which run as a separate "server" process, SQLite is **embedded**. 
 
-### 🌟 1. Unique Features of SQLite
-- **Serverless**: There is no separate "server" to install or manage. The database engine runs directly as part of your application.
-- **Zero-Configuration**: No setup, no users, no permissions to manage. Just point your app at a file.
-- **Single File**: The entire database (tables, indexes, and data) is stored in **one single file** on your hard drive (e.g., `citizens.db`).
-- **Application File Format**: Because it's a single file, SQLite is often used as a file format for applications. For example:
-    - **Web Browsers**: Your Chrome/Firefox history and cookies are stored in SQLite files.
-    - **Mobile Apps**: Most iOS and Android apps use SQLite to store local data.
-    - **Adobe Lightroom**: Uses SQLite for its catalog format.
+- **Serverless**: No separate server to manage. The database is just a file on your disk (e.g., `citizens.db`).
+- **Zero-Configuration**: No users, no permissions, no complex setup. Just point your app at the file.
+- **Application File Format**: SQLite is used everywhere—from your web browser's history to your mobile phone's apps.
 
 ---
 
 ## 🏗️ Project Architecture
 
-This lab environment consists of three containers:
-1.  **Registry Web UI (Flask)**: A simple website to view and manage citizens (`http://localhost:5000`).
-2.  **DB Browser for SQLite (DB4S)**: A professional GUI to inspect the raw database (`http://localhost:3000`).
-3.  **Citizen CLI**: A terminal tool for advanced database operations and manual SQL commands.
+We are running three main containers:
+1.  **Registry Web UI (Flask)**: A simple website for managing citizens (`http://localhost:5000`).
+2.  **DB Browser (DB4S)**: A professional GUI to inspect and manipulate the raw database file (`http://localhost:3000`).
+3.  **Citizen CLI**: A terminal environment for running raw SQL commands.
 
 ---
 
-## 🛠️ Quick Start
+## 🛠️ Mission 0: Launch & Setup
 
-### 1. Launch the Lab
-Run the following command to start the environment:
-
-```bash
-docker compose up -d
-```
-
-### 2. Initialize the Database
-Before the website can show anything, we need to create the table and add some data.
-
-```bash
-# Enter the CLI container
-docker exec -it citizen_cli bash
-
-# Inside the container, run these commands:
-python db_tool.py init
-python db_tool.py seed
-```
+1.  **Start the environment:**
+    ```bash
+    docker compose up -d
+    ```
+2.  **Initialize the database (one-time setup):**
+    ```bash
+    docker exec -it citizen_cli python db_tool.py init
+    docker exec -it citizen_cli python db_tool.py seed
+    ```
 
 ---
 
-## 🎓 Mission 1: Core SQL (CRUD)
+## 🎓 Mission 1: The CRUD Mirror (Web UI vs. SQL)
 
-CRUD stands for **Create, Read, Update, and Delete**. Open the **Citizen CLI** or use the **Execute SQL** tab in DB Browser (`http://localhost:3000`) to run these commands.
+Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perform these actions first through a "normal" website, then see the raw SQL that makes it happen.
 
-### 1. CREATE (Insert Data)
-Let's add a new citizen to Bikini Bottom.
+### 1. CREATE (Adding data)
+-   **Web UI**: Go to [Add Citizen](http://localhost:5000/add) and add `Plankton`, species `Plankton`, career `Evil Genius`, age `50`.
+-   **SQL Equivalent** (Run in `citizen_cli`):
+    ```sql
+    INSERT INTO Citizens (name, species, career, age) 
+    VALUES ('Plankton', 'Plankton', 'Evil Genius', 50);
+    ```
 
-```sql
-INSERT INTO Citizens (name, species, career, age) 
-VALUES ('Plankton', 'Plankton', 'Evil Genius', 50);
-```
+### 2. READ (Finding data)
+-   **Web UI**: Look at the main table at `http://localhost:5000/`.
+-   **SQL Equivalent** (Run in `citizen_cli`):
+    ```sql
+    -- Find everyone older than 25, ordered by age
+    SELECT * FROM Citizens WHERE age > 25 ORDER BY age DESC;
+    ```
 
-### 2. READ (Select Data)
-Find specific citizens using filters.
+### 3. UPDATE (Modifying data)
+-   **Web UI**: Click **Edit** next to Squidward and change his career to `Artist`.
+-   **SQL Equivalent** (Run in `citizen_cli`):
+    ```sql
+    UPDATE Citizens SET career = 'Artist' WHERE name = 'Squidward Tentacles';
+    ```
 
-```sql
--- Find all sea sponges
-SELECT * FROM Citizens WHERE species = 'Sea Sponge';
+### 4. DELETE (Removing data)
+-   **Web UI**: Click **Delete** next to Patrick Star.
+-   **SQL Equivalent** (Run in `citizen_cli`):
+    ```sql
+    DELETE FROM Citizens WHERE name = 'Patrick Star';
+    ```
 
--- Find everyone older than 25, ordered by age
-SELECT * FROM Citizens WHERE age > 25 ORDER BY age DESC;
-```
-
-### 3. UPDATE (Modify Data)
-Squidward finally got a promotion (or a pay cut).
-
-```sql
-UPDATE Citizens SET career = 'Artist' WHERE name = 'Squidward Tentacles';
-```
-
-### 4. DELETE (Remove Data)
-Someone moved out of town.
-
-```sql
-DELETE FROM Citizens WHERE name = 'Patrick Star';
-```
-
----
-
-## 🛡️ Mission 2: Data Integrity & Constraints
-
-Databases aren't just for storing data; they're for **protecting** it. We use **Constraints** to enforce rules.
-
-### 1. NOT NULL
-We should never have a citizen without a name.
-```sql
--- In our schema, the 'name' column is defined as:
--- name TEXT NOT NULL
-```
-
-### 2. CHECK Constraints
-In our CLI tool (`db_tool.py`), we defined the `age` column with a rule:
-```sql
--- age INTEGER CHECK(age >= 0)
-```
-Try to insert a citizen with a negative age in DB Browser and see what happens!
+> [!TIP]
+> **Fundamental Fact:** No matter how fancy the website's button is, it is ultimately just generating and sending a SQL command to the database file!
 
 ---
 
-## 🔐 Mission 3: SQL Injection (Security Lab)
+## 🖥️ Mission 2: Professional Inspection (DB Browser)
 
-Visit `http://localhost:5000/security-lab` in your browser.
+Open [DB Browser for SQLite](http://localhost:3000).
 
-### The Danger: String Concatenation
-When developers build queries by adding strings together, attackers can "inject" their own SQL.
+1.  **Browse Data:** Click the `Browse Data` tab. Select the `Citizens` table from the dropdown. You'll see a spreadsheet-like view of your data.
+2.  **Execute SQL:** Click the `Execute SQL` tab. Type `SELECT * FROM Citizens;` and press the **Play** button. 
+3.  **Why use it?** Professional developers use tools like this to quickly check data, debug issues, or run manual reports without needing to write a whole web interface.
 
-**The Vulnerable Query (in Python):**
-```python
-query = f"SELECT * FROM Citizens WHERE name = '{user_input}'"
-```
+---
 
-If an attacker types `' OR '1'='1`, the final query becomes:
-`SELECT * FROM Citizens WHERE name = '' OR '1'='1'`
-Since `1=1` is always true, the database returns **every single record**!
+## 🛡️ Mission 3: Data Integrity & Security
 
-### The Solution: Parameter Binding
-Professional developers use **Parameter Binding**. We send the query and the data to the database separately.
+### 1. Constraints (The Rules)
+In your `db_tool.py`, the database was created with **Constraints**:
+-   `name TEXT NOT NULL`: Every citizen MUST have a name.
+-   `age INTEGER CHECK(age >= 0)`: Negative ages are banned.
 
-**The Secure Query (in Python):**
-```python
-# The '?' is a placeholder
-cursor.execute("SELECT * FROM Citizens WHERE name = ?", (user_input,))
-```
-The database now treats the entire input as a single literal string, making the attack impossible.
+**Challenge:** Try to use DB Browser's `Execute SQL` tab to insert a citizen with an age of `-5`. *What error does SQLite give you?*
+
+### 2. SQL Injection (Security Lab)
+Visit the [Security Lab](http://localhost:5000/security-lab).
+
+-   **Vulnerable Mode**: Search for `' OR '1'='1`. You just tricked the database into showing everything! This happens when code "pastes" your input directly into a query.
+-   **Secured Mode**: Search for the same thing. It returns zero results. This uses **Parameter Binding**, where the database treats your input as a *literal string*, not as a command.
 
 ---
 
 ## 📈 Mission 4: Schema Evolution (Migrations)
 
-As applications grow, their databases must change. We call this a **Migration**.
+As applications grow, we need more tables and columns. 
 
-### 1. Adding a Column
-Bikini Bottom now needs to track home addresses.
-```sql
-ALTER TABLE Citizens ADD COLUMN home_address TEXT;
-```
+1.  **Run the Migration command:**
+    ```bash
+    docker exec -it citizen_cli python db_tool.py migrate
+    ```
+2.  **Check the changes in DB Browser:**
+    -   Look at the `Database Structure` tab. Notice the new `home_address` column in `Citizens`.
+    -   Notice the two new tables: `Employers` and `WorksAt`.
 
-### 2. Linking Tables (Foreign Keys)
-Let's create an `Employers` table and link it to our `Citizens`.
-
-```sql
-CREATE TABLE Employers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    company_name TEXT NOT NULL,
-    industry TEXT
-);
-
--- Linking table (Many-to-Many or One-to-Many)
-CREATE TABLE WorksAt (
-    citizen_id INTEGER,
-    employer_id INTEGER,
-    job_title TEXT,
-    FOREIGN KEY (citizen_id) REFERENCES Citizens(id),
-    FOREIGN KEY (employer_id) REFERENCES Employers(id)
-);
-```
-
-**Run the migration command in the CLI container:**
-```bash
-python db_tool.py migrate
-```
-
-Now use DB Browser to see how the "Database Structure" has changed!
+This process of updating the database structure is called a **Migration**.

@@ -19,6 +19,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - sqlite_data:/data
+      - ./sqlitebrowser.conf:/config/.config/sqlitebrowser/sqlitebrowser.conf
     ports:
       - "3000:3000"
       - "3001:3001"
