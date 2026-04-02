@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Edit Citizen</h1>
+<form method="post">
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" name="name" class="form-control" id="name" value="{{ citizen.name }}" required>
+  </div>
+  <div class="mb-3">
+    <label for="species" class="form-label">Species</label>
+    <input type="text" name="species" class="form-control" id="species" value="{{ citizen.species }}">
+  </div>
+  <div class="mb-3">
+    <label for="career" class="form-label">Career</label>
+    <input type="text" name="career" class="form-control" id="career" value="{{ citizen.career }}">
+  </div>
+  <div class="mb-3">
+    <label for="age" class="form-label">Age</label>
+    <input type="number" name="age" class="form-control" id="age" value="{{ citizen.age }}">
+  </div>
+  <button type="submit" class="btn btn-primary">Update Citizen</button>
+  <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

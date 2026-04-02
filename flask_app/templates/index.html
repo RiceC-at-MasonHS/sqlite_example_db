@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Bikini Bottom Citizens</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Species</th>
+      <th>Career</th>
+      <th>Age</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for citizen in citizens %}
+    <tr>
+      <td>{{ citizen.id }}</td>
+      <td>{{ citizen.name }}</td>
+      <td>{{ citizen.species }}</td>
+      <td>{{ citizen.career }}</td>
+      <td>{{ citizen.age }}</td>
+      <td>
+        <a href="{{ url_for('edit', id=citizen.id) }}" class="btn btn-sm btn-warning">Edit</a>
+        <form action="{{ url_for('delete', id=citizen.id) }}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% if not citizens %}
+<p>No citizens found. Did you initialize the database?</p>
+{% endif %}
+{% endblock %}

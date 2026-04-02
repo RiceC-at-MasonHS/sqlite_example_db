@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Security Lab: SQL Injection 🛡️</h1>
+<p>Experiment with how different ways of handling user input affect database security.</p>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      <div class="col-md-6">
+        <label for="search_term" class="form-label">Search Citizen Name</label>
+        <input type="text" name="search_term" class="form-control" id="search_term" value="{{ search_term }}" placeholder="e.g. Spongebob">
+      </div>
+      <div class="col-md-4">
+        <label for="mode" class="form-label">Security Mode</label>
+        <select name="mode" class="form-select" id="mode">
+          <option value="SECURED" {% if mode == 'SECURED' %}selected{% endif %}>SECURED (Parameter Binding)</option>
+          <option value="VULNERABLE" {% if mode == 'VULNERABLE' %}selected{% endif %}>VULNERABLE (String Concatenation)</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary w-100">Search</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% if query %}
+<div class="alert {% if mode == 'VULNERABLE' %}alert-warning{% else %}alert-success{% endif %}">
+  <strong>SQL Query executed:</strong> <code>{{ query }}</code>
+</div>
+{% endif %}
+
+<h3>Results</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Species</th>
+      <th>Career</th>
+      <th>Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in results %}
+    <tr>
+      <td>{{ row.id }}</td>
+      <td>{{ row.name }}</td>
+      <td>{{ row.species }}</td>
+      <td>{{ row.career }}</td>
+      <td>{{ row.age }}</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="5" class="text-center">No results found.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr>
+<h4>Try these Injection Attacks (VULNERABLE Mode):</h4>
+<ul>
+  <li>Show all records: <code>' OR '1'='1</code></li>
+  <li>Union attack (if you know columns): <code>' UNION SELECT 1, 'Hacker', 'Virus', 'Infiltrator', 99 --</code></li>
+</ul>
+{% endblock %}
