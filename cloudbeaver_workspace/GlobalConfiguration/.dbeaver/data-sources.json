@@ -1,0 +1,50 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite-citizens": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "Bikini Bottom Citizens DB",
+			"save-password": true,
+			"show-system-objects": true,
+			"configuration": {
+				"database": "/opt/cloudbeaver/workspace/shared_data/citizens.db",
+				"url": "jdbc:sqlite:/opt/cloudbeaver/workspace/shared_data/citizens.db",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true
+			}
+		},
+		"sqlite_jdbc-19d4ecca406-53fa8a4d06e2a247": {
+			"provider": "sqlite",
+			"driver": "sqlite_jdbc",
+			"name": "SQLite@localhost",
+			"configuration": {
+				"url": "jdbc:sqlite:{file}",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"auth-model": "native",
+				"bootstrap": {
+					"autocommit": true
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
+}

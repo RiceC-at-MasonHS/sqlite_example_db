@@ -15,7 +15,7 @@ Unlike "gold-standard" databases like PostgreSQL, which run as a separate "serve
 
 We are running three main containers:
 1.  **Registry Web UI (Flask)**: A simple website for managing citizens (`http://localhost:5000`).
-2.  **DB Browser (DB4S)**: A professional GUI to inspect and manipulate the raw database file (`http://localhost:3000`).
+2.  **CloudBeaver**: A professional web-based database management tool (`http://localhost:8978`).
 3.  **Citizen CLI**: A terminal environment for running raw SQL commands.
 
 ---
@@ -73,13 +73,14 @@ Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perfo
 
 ---
 
-## 🖥️ Mission 2: Professional Inspection (DB Browser)
+## 🖥️ Mission 2: Professional Inspection (CloudBeaver)
 
-Open [DB Browser for SQLite](http://localhost:3000).
+Open [CloudBeaver](http://localhost:8978).
 
-1.  **Browse Data:** Click the `Browse Data` tab. Select the `Citizens` table from the dropdown. You'll see a spreadsheet-like view of your data.
-2.  **Execute SQL:** Click the `Execute SQL` tab. Type `SELECT * FROM Citizens;` and press the **Play** button. 
-3.  **Why use it?** Professional developers use tools like this to quickly check data, debug issues, or run manual reports without needing to write a whole web interface.
+1.  **Pre-configured Connection**: You should see a connection named **Bikini Bottom Citizens DB** on the left.
+2.  **Browse Data**: Double-click the connection, navigate to `Databases` > `main` > `Tables` > `Citizens`. Double-click the table to see a spreadsheet-like view of your data.
+3.  **Execute SQL**: Click the `SQL` icon in the toolbar (or press `ALT + Enter` on the table). Type `SELECT * FROM Citizens;` and press the **Execute** (Play) button. 
+4.  **Why use it?** Professional developers use web-based tools like CloudBeaver to manage remote databases without needing to install local software. It gives you a powerful view of your file-based SQLite database.
 
 ---
 
@@ -90,11 +91,12 @@ In your `db_tool.py`, the database was created with **Constraints**:
 -   `name TEXT NOT NULL`: Every citizen MUST have a name.
 -   `age INTEGER CHECK(age >= 0)`: Negative ages are banned.
 
-**Challenge:** Try to use DB Browser's `Execute SQL` tab to insert a citizen with an age of `-5`. *What error does SQLite give you?*
+**Challenge:** Try to use CloudBeaver's SQL editor to insert a citizen with an age of `-5`. *What error does SQLite give you?*
 
 ### 2. SQL Injection (Security Lab)
 Visit the [Security Lab](http://localhost:5000/security-lab).
 
+-   **Internal Path**: Notice the internal database path displayed in the blue box.
 -   **Vulnerable Mode**: Search for `' OR '1'='1`. You just tricked the database into showing everything! This happens when code "pastes" your input directly into a query.
 -   **Secured Mode**: Search for the same thing. It returns zero results. This uses **Parameter Binding**, where the database treats your input as a *literal string*, not as a command.
 
@@ -108,8 +110,9 @@ As applications grow, we need more tables and columns.
     ```bash
     docker exec -it citizen_cli python db_tool.py migrate
     ```
-2.  **Check the changes in DB Browser:**
-    -   Look at the `Database Structure` tab. Notice the new `home_address` column in `Citizens`.
+2.  **Check the changes in CloudBeaver:**
+    -   Refresh your connection.
+    -   Notice the new `home_address` column in `Citizens`.
     -   Notice the two new tables: `Employers` and `WorksAt`.
 
 This process of updating the database structure is called a **Migration**.

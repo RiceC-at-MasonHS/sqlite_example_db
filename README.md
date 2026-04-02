@@ -25,7 +25,7 @@ docker compose up -d
 
 ### 3. Services
 - **Citizen Registry (Web UI)**: [http://localhost:5000](http://localhost:5000)
-- **DB Browser (GUI)**: [http://localhost:3000](http://localhost:3000)
+- **CloudBeaver (Web-based GUI)**: [http://localhost:8978](http://localhost:8978)
 - **CLI Tool**: `docker exec -it citizen_cli bash`
 
 ### 4. Setup the Data
