@@ -15,7 +15,7 @@ Unlike "gold-standard" databases like PostgreSQL, which run as a separate "serve
 
 We are running three main containers:
 1.  **Registry Web UI (Flask)**: A simple website for managing citizens (`http://localhost:5000`).
-2.  **CloudBeaver**: A professional web-based database management tool (`http://localhost:8978`).
+2.  **Database Browser (sqlite-web)**: A simple web-based database viewer (`http://localhost:8080`).
 3.  **Citizen CLI**: A terminal environment for running raw SQL commands.
 
 ---
@@ -73,14 +73,13 @@ Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perfo
 
 ---
 
-## 🖥️ Mission 2: Professional Inspection (CloudBeaver)
+## 🖥️ Mission 2: Professional Inspection (sqlite-web)
 
-Open [CloudBeaver](http://localhost:8978).
+Open [sqlite-web](http://localhost:8080).
 
-1.  **Pre-configured Connection**: You should see a connection named **Bikini Bottom Citizens DB** on the left.
-2.  **Browse Data**: Double-click the connection, navigate to `Databases` > `main` > `Tables` > `Citizens`. Double-click the table to see a spreadsheet-like view of your data.
-3.  **Execute SQL**: Click the `SQL` icon in the toolbar (or press `ALT + Enter` on the table). Type `SELECT * FROM Citizens;` and press the **Execute** (Play) button. 
-4.  **Why use it?** Professional developers use web-based tools like CloudBeaver to manage remote databases without needing to install local software. It gives you a powerful view of your file-based SQLite database.
+1.  **Data Explorer**: Click on the **Citizens** table name. You can instantly see all records in a spreadsheet view.
+2.  **Execute SQL**: Click the **Query** tab. Type `SELECT * FROM Citizens;` and press the **Execute** button. 
+3.  **Why use it?** `sqlite-web` is a perfect tool for quickly browsing database files that are stored inside a container without needing a full-blown database server.
 
 ---
 
@@ -91,14 +90,14 @@ In your `db_tool.py`, the database was created with **Constraints**:
 -   `name TEXT NOT NULL`: Every citizen MUST have a name.
 -   `age INTEGER CHECK(age >= 0)`: Negative ages are banned.
 
-**Challenge:** Try to use CloudBeaver's SQL editor to insert a citizen with an age of `-5`. *What error does SQLite give you?*
+**Challenge:** Try to use sqlite-web's **Query** tab to insert a citizen with an age of `-5`. *What error does SQLite give you?*
 
 ### 2. SQL Injection (Security Lab)
 Visit the [Security Lab](http://localhost:5000/security-lab).
 
--   **Internal Path**: Notice the internal database path displayed in the blue box.
--   **Vulnerable Mode**: Search for `' OR '1'='1`. You just tricked the database into showing everything! This happens when code "pastes" your input directly into a query.
--   **Secured Mode**: Search for the same thing. It returns zero results. This uses **Parameter Binding**, where the database treats your input as a *literal string*, not as a command.
+-   **Internal Path**: Notice the internal database path displayed in the blue box. Because we use a **Docker Volume**, the file exists inside the container's environment, not your host desktop.
+-   **Vulnerable Mode**: Search for `' OR '1'='1`. You just tricked the database into showing everything!
+-   **Secured Mode**: Search for the same thing. It returns zero results because of **Parameter Binding**.
 
 ---
 
@@ -110,8 +109,8 @@ As applications grow, we need more tables and columns.
     ```bash
     docker exec -it citizen_cli python db_tool.py migrate
     ```
-2.  **Check the changes in CloudBeaver:**
-    -   Refresh your connection.
+2.  **Check the changes in sqlite-web:**
+    -   Refresh your browser.
     -   Notice the new `home_address` column in `Citizens`.
     -   Notice the two new tables: `Employers` and `WorksAt`.
 

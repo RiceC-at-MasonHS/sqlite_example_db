@@ -1,6 +1,6 @@
 # SQLite Citizen Registry Lab 🐚
 
-A teaching tool designed to demonstrate relational database concepts through a SpongeBob-themed application. This repository provides a complete environment including an embedded SQLite database, a Flask web interface, a CLI management tool, and DB Browser for SQLite (DB4S) for direct database inspection.
+A teaching tool designed to demonstrate relational database concepts through a SpongeBob-themed application. This repository provides a complete environment including an embedded SQLite database, a Flask web interface, a CLI management tool, and **sqlite-web** for direct database inspection.
 
 ## 🌟 Why This Lab?
 
@@ -10,7 +10,7 @@ This lab focuses on **SQLite**, the world's most popular embedded database. It s
 
 - **Database**: [SQLite 3](https://www.sqlite.org/)
 - **Backend**: Python 3.13 + Flask
-- **GUI Tool**: [DB Browser for SQLite (DB4S)](https://sqlitebrowser.org/)
+- **GUI Tool**: [sqlite-web](https://github.com/coleifer/sqlite-web)
 - **Containerization**: [Docker](https://www.docker.com/) & [Docker Compose](https://docs.docker.com/compose/)
 
 ## 🚀 Getting Started
@@ -25,7 +25,7 @@ docker compose up -d
 
 ### 3. Services
 - **Citizen Registry (Web UI)**: [http://localhost:5000](http://localhost:5000)
-- **CloudBeaver (Web-based GUI)**: [http://localhost:8978](http://localhost:8978)
+- **Database Browser (sqlite-web)**: [http://localhost:8080](http://localhost:8080)
 - **CLI Tool**: `docker exec -it citizen_cli bash`
 
 ### 4. Setup the Data
