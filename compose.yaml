@@ -1,0 +1,38 @@
+services:
+  web:
+    build: ./flask_app
+    container_name: citizen_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - sqlite_data:/data
+    environment:
+      - DATABASE_PATH=/data/citizens.db
+    restart: unless-stopped
+
+  dbbrowser:
+    image: lscr.io/linuxserver/sqlitebrowser:latest
+    container_name: citizen_db4s
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - sqlite_data:/data
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    restart: unless-stopped
+
+  cli:
+    build: ./cli
+    container_name: citizen_cli
+    volumes:
+      - sqlite_data:/data
+    environment:
+      - DATABASE_PATH=/data/citizens.db
+    tty: true
+    stdin_open: true
+
+volumes:
+  sqlite_data:
