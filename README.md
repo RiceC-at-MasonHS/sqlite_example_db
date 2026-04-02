@@ -1,6 +1,6 @@
 # SQLite Citizen Registry Lab 🐚
 
-A teaching tool designed to demonstrate relational database concepts through a SpongeBob-themed application. This repository provides a complete environment including an embedded SQLite database, a Flask web interface, a CLI management tool, and **sqlite-web** for direct database inspection.
+A teaching tool designed to demonstrate relational database concepts through a SpongeBob-themed application. This repository provides a complete environment including an embedded **[SQLite database](https://sqlite.org/)**, a **[Flask](https://flask.palletsprojects.com/en/stable/)** web interface, a CLI management tool, and **[sqlite-web](https://github.com/coleifer/sqlite-web)** for direct database inspection.
 
 ## 🌟 Why This Lab?
 
