@@ -15,6 +15,8 @@ This lab focuses on **SQLite**, the world's most popular embedded database. It s
 
 ## 🚀 Getting Started
 
+If you are going to do the lesson, just head over to [LESSON.md](LESSON.md).
+
 ### 1. Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) or Docker Engine installed.
 
