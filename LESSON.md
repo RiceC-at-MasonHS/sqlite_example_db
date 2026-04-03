@@ -43,7 +43,7 @@ Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perfo
 -   **SQL Equivalent** (Run in `citizen_cli`):
     ```sql
     INSERT INTO Citizens (name, species, career, age) 
-    VALUES ('Plankton', 'Plankton', 'Evil Genius', 50);
+    VALUES ('Lenord Fishman', 'Flounder', 'Plebian', 37);
     ```
 
 ### 2. READ (Finding data)
@@ -58,7 +58,7 @@ Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perfo
 -   **Web UI**: Click **Edit** next to Squidward and change his career to `Artist`.
 -   **SQL Equivalent** (Run in `citizen_cli`):
     ```sql
-    UPDATE Citizens SET career = 'Artist' WHERE name = 'Squidward Tentacles';
+    UPDATE Citizens SET career = 'Superhero' WHERE name = 'Spongebob Squarepants';
     ```
 
 ### 4. DELETE (Removing data)
