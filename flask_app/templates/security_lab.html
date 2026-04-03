@@ -5,7 +5,9 @@
 <p>Experiment with how different ways of handling user input affect database security.</p>
 
 <div class="alert alert-info">
-  <strong>Database File Location (Internal):</strong> <code>{{ abs_db_path }}</code>
+  <strong>Database File Location (Internal, in <code>citizen_web</code> container):</strong> <code>{{ abs_db_path }}</code>
+  <br>
+  <em>The database file is also hidden in the <code>citizen_browser</code> container. Good luck finding it!</em>
 </div>
 
 <div class="card mb-4">
@@ -13,7 +15,7 @@
     <form method="post" class="row g-3">
       <div class="col-md-6">
         <label for="search_term" class="form-label">Search Citizen Name</label>
-        <input type="text" name="search_term" class="form-control" id="search_term" value="{{ search_term }}" placeholder="e.g. Spongebob">
+        <input type="text" name="search_term" class="form-control" id="search_term" value="{{ search_term }}" placeholder="e.g. Spongebob Squarepants">
       </div>
       <div class="col-md-4">
         <label for="mode" class="form-label">Security Mode</label>

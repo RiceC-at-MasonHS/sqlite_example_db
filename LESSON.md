@@ -10,18 +10,16 @@ Unlike "gold-standard" databases like PostgreSQL, which run as a separate "serve
 - **Application File Format**: SQLite is used everywhere—from your web browser's history to your mobile phone's apps.
 
 ---
-
-## 🏗️ Project Architecture
-
-We are running three main containers:
-1.  **Registry Web UI (Flask)**: A simple website for managing citizens (`http://localhost:5000`).
-2.  **Database Browser (sqlite-web)**: A simple web-based database viewer (`http://localhost:8080`).
-3.  **Citizen CLI**: A terminal environment for running raw SQL commands.
-
 ---
 
 ## 🛠️ Mission 0: Launch & Setup
 
+This Lesson is run with [Docker](https://www.docker.com/) containers, so that you don;t have to fuss with configuration at all. Just ensure it is installed, and run the commands below. 
+
+> [!WARNING]
+> You will need a running `Docker Engine` and that may require quire a command or (more likely) starting Docker Desktop to proceed.
+
+Run these in your **Debian** shell, inside WSL on your computer.
 1.  **Start the environment:**
     ```bash
     docker compose up -d
@@ -32,22 +30,38 @@ We are running three main containers:
     docker exec -it citizen_cli python db_tool.py seed
     ```
 
+## 🏗️ Project Architecture
+
+We are running three main containers:
+1.  **Registry Web UI (Flask)**: A simple website for managing citizens ([`http://localhost:5000`](http://localhost:5000)).
+2.  **Database Browser (sqlite-web)**: A simple web-based database viewer ([`http://localhost:8080`](http://localhost:8080)).
+3.  **Citizen CLI**: A terminal environment for running raw SQL commands. (*This is where you ran the commands above...*)
 ---
 
 ## 🎓 Mission 1: The CRUD Mirror (Web UI vs. SQL)
 
-Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perform these actions first through a "normal" website, then see the raw SQL that makes it happen.
+Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perform these actions first through a "normal" website, then see the raw SQL that makes *a very similar* action happen.
+
+You are encouraged to try all of these actions. The GUIs features are pretty clear, but the CLI steps are a little trickier. We encourage you follow the steps we outline below, so you can run the commands in `citizen_cli` for each step below.
+```shell
+# to log your terminal into the `citizen_cli` container as root:
+docker exec -it citizen_cli bash
+
+# then you can run the sql commands with this pattern:
+# >>> replace the <SQL-COMMAND> keep the double-quotes 
+python db_tool.py shell "<SQL-COMMAND>"
+``` 
 
 ### 1. CREATE (Adding data)
 -   **Web UI**: Go to [Add Citizen](http://localhost:5000/add) and add `Plankton`, species `Plankton`, career `Evil Genius`, age `50`.
 -   **SQL Equivalent** (Run in `citizen_cli`):
     ```sql
     INSERT INTO Citizens (name, species, career, age) 
-    VALUES ('Lenord Fishman', 'Flounder', 'Plebian', 37);
+    VALUES ('Lenord Fishman', 'Flounder', 'Plebeian', 37);
     ```
 
 ### 2. READ (Finding data)
--   **Web UI**: Look at the main table at `http://localhost:5000/`.
+-   **Web UI**: Look at the main table at [`http://localhost:5000/`](http://localhost:5000/).
 -   **SQL Equivalent** (Run in `citizen_cli`):
     ```sql
     -- Find everyone older than 25, ordered by age
@@ -75,7 +89,7 @@ Databases revolve around **CRUD**: Create, Read, Update, and Delete. Let's perfo
 
 ## 🖥️ Mission 2: Professional Inspection (sqlite-web)
 
-Open [sqlite-web](http://localhost:8080).
+Open [sqlite-web](http://localhost:8080) to the to the base page.
 
 1.  **Data Explorer**: Click on the **Citizens** table name. You can instantly see all records in a spreadsheet view.
 2.  **Execute SQL**: Click the **Query** tab. Type `SELECT * FROM Citizens;` and press the **Execute** button. 
@@ -115,3 +129,8 @@ As applications grow, we need more tables and columns.
     -   Notice the two new tables: `Employers` and `WorksAt`.
 
 This process of updating the database structure is called a **Migration**.
+
+## 📸 Mission 5: Put yourself in the data
+Now execute any kind of manipulation to put yourself in the database. *Ideally with shell commands,* but we'll accept anything.
+
+Take a screenshot of yourself in the database to submit as proof that you've completed this lesson. The screenshot should be fullscreen, show running containers, and your Google icon. 
