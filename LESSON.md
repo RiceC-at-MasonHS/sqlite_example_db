@@ -47,9 +47,10 @@ You are encouraged to try all of these actions. The GUIs features are pretty cle
 # to log your terminal into the `citizen_cli` container as root:
 docker exec -it citizen_cli bash
 
-# then you can run the sql commands with this pattern:
-# >>> replace the <SQL-COMMAND> keep the double-quotes 
-python db_tool.py shell "<SQL-COMMAND>"
+# then run the following command to enter the SQLite shell 
+python db_tool.py shell
+# > once in that shell, you can run SQL commands directly
+# > To exit the SQLite shell, use the `.quit` command
 ``` 
 
 ### 1. CREATE (Adding data)
@@ -129,6 +130,8 @@ As applications grow, we need more tables and columns.
     -   Notice the two new tables: `Employers` and `WorksAt`.
 
 This process of updating the database structure is called a **Migration**.
+
+We will leave it here, for you to explore coordinating the relationships between citizens and their places of employment. But it is a great chance to explore Primary and Foreign Keys within a database....
 
 ## 📸 Mission 5: Put Yourself in the Database
 Now execute any kind of manipulation to put yourself in the database. *Ideally with shell commands,* but we'll accept anything.
