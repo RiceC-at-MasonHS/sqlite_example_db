@@ -130,7 +130,9 @@ As applications grow, we need more tables and columns.
 
 This process of updating the database structure is called a **Migration**.
 
-## 📸 Mission 5: Put yourself in the data
+## 📸 Mission 5: Put Yourself in the Database
 Now execute any kind of manipulation to put yourself in the database. *Ideally with shell commands,* but we'll accept anything.
 
 Take a screenshot of yourself in the database to submit as proof that you've completed this lesson. The screenshot should be fullscreen, show running containers, and your Google icon. 
+
+![Screenshot if ideal submission](perfect-submit.png)
